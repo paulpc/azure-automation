@@ -1,4 +1,9 @@
-$tags = get-content ..\tags.txt
+# getting tags ready
+$tags = @{}
+$tags_ojb = get-content ..\tags.json | ConvertFrom-Json 
+$tags_ojb.psobject.properies | ForEach-Object { $tags[$_.Name] = $_.Value }
+$tags["Build Date"]=get-date -UFormat "%m/%d/%Y"
+# Iterating through things
 foreach ($subby in Get-AzureRmSubscription ) {
     Select-AzureRmSubscription -Subscription $subby.id
     foreach ($nsg in Get-AzureRmNetworkSecurityGroup) {
@@ -17,7 +22,7 @@ foreach ($subby in Get-AzureRmSubscription ) {
                 }
                 if ( -NOT ($found) ) {
                     Write-Host "Need to create storage $($subby.id.split("-")[0])$($nsg.Location) for  $($nsg.Name) in $($nsg.Location)"
-                    #New-AzureRmStorageAccount -name "$($subby.id.split("-")[0])$($nsg.Location)" -Kind BlobStorage -Location $($nsg.Location) -SkuName Standard_LRS -ResourceGroupName NetworkWatcherRG -Tag $tags -EnableHttpsTrafficOnly $true -AccessTier Hot 
+                    #New-AzureRmStorageAccount -name "$($subby.id.split("-")[0])$($nsg.Location)" -Kind BlobStorage -Location $($nsg.Location) -SkuName Standard_LRS -ResourceGroupName NetworkWatcherRG -EnableHttpsTrafficOnly $true -AccessTier Hot -Tag $tags
                 }
             }
         }
