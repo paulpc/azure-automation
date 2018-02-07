@@ -14,7 +14,8 @@ foreach ($subby in Get-AzureRmSubscription ) {
                         }
                     }
                     if ( -NOT $found) {
-                        Write-Host "Need to create storage for  $nsg.Name in  $nsg.Location "
+                        Write-Host "Need to create storage "$($subby.id.split("-")[0])$($nsg.Location)" for  $($nsg.Name) in $($nsg.Location)"
+                        #New-AzureRmStorageAccount -name "$($subby.id.split("-")[0])$($nsg.Location)"
                     }
                 }
             }
