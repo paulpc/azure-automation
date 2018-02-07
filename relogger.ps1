@@ -6,7 +6,7 @@ foreach ($subby in Get-AzureRmSubscription ) {
     $logpro.Name
     if ($logpro) {
         # powershell sucks - so let's remove the existing logging profile
-        Write-Host "Remove-AzureRmLogProfile -Name $logpro.Name"
+        Write-Host "Remove-AzureRmLogProfile -Name" $logpro.Name
     }
 
     # creating the log profile here
