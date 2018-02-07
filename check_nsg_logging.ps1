@@ -6,17 +6,17 @@ foreach ($subby in Get-AzureRmSubscription ) {
                 Write-Host $networkwatcher.Name, $nsg.Name, $subby.SubscriptionName
                 $flstatus = Get-AzureRmNetworkWatcherFlowLogStatus -NetworkWatcher $networkwatcher -TargetResourceId $nsg.Id
                 if (-NOT ($flstatus.Enabled)) {
-                    foreach ($store in Get-AzureRmStorageAccount -ResourceGroupName NetworkWatcherRG) {
-                        $found=$fasle
-                        if ($store.Location -eq $nsg.Location) {
-                            Write-Host "you should enable logging for $nsg.Name"
-                            $found=$true
-                        }
+                    Write-Host "you should enable logging for$($nsg.Name)"
+                }
+                foreach ($store in Get-AzureRmStorageAccount -ResourceGroupName NetworkWatcherRG) {
+                    $found=$false
+                    if ($store.Location -eq $nsg.Location) {
+                        $found=$true
                     }
-                    if ( -NOT $found) {
-                        Write-Host "Need to create storage "$($subby.id.split("-")[0])$($nsg.Location)" for  $($nsg.Name) in $($nsg.Location)"
-                        #New-AzureRmStorageAccount -name "$($subby.id.split("-")[0])$($nsg.Location)"
-                    }
+                }
+                if ( -NOT ($found) ) {
+                    Write-Host "Need to create storage "$($subby.id.split("-")[0])$($nsg.Location)" for  $($nsg.Name) in $($nsg.Location)"
+                    New-AzureRmStorageAccount -name "$($subby.id.split("-")[0])$($nsg.Location)" -Kind BlobStorage -Location $($nsg.Location) -SkuName Standard_LRS -ResourceGroupName NetworkWatcherRG -Tag $tags -EnableHttpsTrafficOnly $true -AccessTier Hot 
                 }
             }
         }
