@@ -1,15 +1,15 @@
+# reading eventhub settings from the text file - shouldn't make it to github
 $eventHubString = get-content eventhub.txt
+# iterating throught the subscriptions
 foreach ($subby in Get-AzureRmSubscription ) {
-    Write-Host $subby.SubscriptionName
     Select-AzureRmSubscription -Subscription $subby.id
+    # switching to the sub
     $logpro=Get-AzureRmLogProfile
-    $logpro.Name
-    $logpro.location
+    # if it has a logging profile, we'll delete it
     if ($logpro) {
         # powershell sucks - so let's remove the existing logging profile
-        Write-Host "Remove-AzureRmLogProfile -Name" $logpro.Name
+        Remove-AzureRmLogProfile -Name $logpro.Name
     }
-
-    # creating the log profile here
-    Write-Host "Add-AzureRmLogProfile -Name default -ServiceBusRuleId $eventHubString -RetentionInDays 0 -Location 'centralus,northcentralus,southcentralus,westus,eastus,eastus2,global'"
+    # (re)creating the log profile here
+    Add-AzureRmLogProfile -Name default -ServiceBusRuleId $eventHubString -RetentionInDays 0 -Location 'centralus,northcentralus,southcentralus,westus,westus2,westcentralus,eastus,eastus2,global'
 }
