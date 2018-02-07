@@ -2,7 +2,7 @@ foreach ($subby in Get-AzureRmSubscription ) {
     Select-AzureRmSubscription -Subscription $subby.id
     foreach ($nsg in Get-AzureRmNetworkSecurityGroup) {
         foreach ($networkwatcher in Get-AzurermNetworkWatcher  -ResourceGroupName NetworkWatcherRg) {
-            if ($nsg.Location == $networkwatcher.Location) {
+            if ($nsg.Location -eq $networkwatcher.Location) {
                 Write-Host $networkwatcher.Name
             }
 
