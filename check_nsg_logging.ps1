@@ -3,9 +3,9 @@ foreach ($subby in Get-AzureRmSubscription ) {
     foreach ($nsg in Get-AzureRmNetworkSecurityGroup) {
         foreach ($networkwatcher in Get-AzurermNetworkWatcher  -ResourceGroupName NetworkWatcherRg) {
             if ($nsg.Location -eq $networkwatcher.Location) {
-                Write-Host $networkwatcher.Name
+                Write-Host $networkwatcher.Name, $nsg.Name
+                Get-AzureRmNetworkWatcherFlowLogStatus -NetworkWatcher $networkwatcher -TargetResourceId $nsg.Id
             }
-
-        }        #Get-AzureRmNetworkWatcherFlowLogStatus -NetworkWatcher $networkwatcher -TargetResourceId $nsg.Id
+        }
     }
 }
