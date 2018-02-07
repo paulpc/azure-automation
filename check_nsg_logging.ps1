@@ -1,3 +1,4 @@
+$tags = get-content ..\tags.txt
 foreach ($subby in Get-AzureRmSubscription ) {
     Select-AzureRmSubscription -Subscription $subby.id
     foreach ($nsg in Get-AzureRmNetworkSecurityGroup) {
