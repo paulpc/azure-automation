@@ -21,3 +21,4 @@ foreach ($subby in Get-AzureRmSubscription ) {
             }
         }
     }
+}
