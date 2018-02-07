@@ -1,7 +1,7 @@
 $eventHubString = get-content eventhub.txt
 foreach ($subby in Get-AzureRmSubscription ) {
     Write-Host $subby.SubscriptionName
-    Select-AzureRmSubscription -Subscription $subscription.id
+    Select-AzureRmSubscription -Subscription $subby.id
     $logging=$FALSE
     foreach ($logpro in Get-AzureRmLogProfile) {
         Write-Host $logpro.ServiceBusRuleId, $logpro.Name
