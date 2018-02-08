@@ -20,7 +20,7 @@ foreach ($subby in Get-AzureRmSubscription ) {
         # if the blobs don't exist, go ahead and make them
         if ( -NOT ($found) ) {
             Write-Host "Need to create storage $($subby.id.split("-")[0])$($nsg.Location) for $($nsg.Name) in $($nsg.Location)"
-            New-AzureRmStorageAccount -name "$($subby.id.split("-")[0])$($nsg.Location)" -Kind BlobStorage -Location $($nsg.Location) -SkuName Standard_LRS -ResourceGroupName NetworkWatcherRG -EnableHttpsTrafficOnly $true -AccessTier Hot -Tag $tags
+            #New-AzureRmStorageAccount -name "$($subby.id.split("-")[0])$($nsg.Location)" -Kind BlobStorage -Location $($nsg.Location) -SkuName Standard_LRS -ResourceGroupName NetworkWatcherRG -EnableHttpsTrafficOnly $true -AccessTier Hot -Tag $tags
         }
 
         foreach ($networkwatcher in Get-AzurermNetworkWatcher  -ResourceGroupName NetworkWatcherRg) {
