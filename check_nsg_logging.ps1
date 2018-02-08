@@ -14,7 +14,7 @@ foreach ($subby in Get-AzureRmSubscription ) {
             # looking for blobs in the NetworkWatcherRG group
             if ($store.Location -eq $nsg.Location) {
                 # that match the location of the NSG
-                $found=$true
+                $found=$store
             }
         }
         # if the blobs don't exist, go ahead and make them
@@ -29,6 +29,7 @@ foreach ($subby in Get-AzureRmSubscription ) {
                 Write-Host $networkwatcher.Name, $nsg.Name, $flstatus.Enabled
                 if (-NOT ($flstatus.Enabled)) {
                     Write-Host "you should enable logging for $($nsg.Name)"
+                    Set-AzureRmNetworkWatcherConfigFlowLog -NetworkWatcher $networkwatcher -TargetResourceId $nsg.Id -EnableFlowLog $true -StorageAccountId $found.Id
                 }
             }
         }
