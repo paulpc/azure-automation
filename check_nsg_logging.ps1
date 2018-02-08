@@ -5,6 +5,7 @@ $tags_ojb.psobject.properties | foreach { $tags[$_.Name] = $_.Value }
 $tags["Build Date"]=get-date -UFormat "%m/%d/%Y"
 # Iterating through things
 foreach ($subby in Get-AzureRmSubscription ) {
+    Write-Host "processing: " $subby.id $subby.Name
     Select-AzureRmSubscription -Subscription $subby.id
     foreach ($nsg in Get-AzureRmNetworkSecurityGroup) {
         # creating the blobs where not already there
