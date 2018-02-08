@@ -11,5 +11,5 @@ foreach ($subby in Get-AzureRmSubscription ) {
         Remove-AzureRmLogProfile -Name $logpro.Name
     }
     # (re)creating the log profile here
-    Add-AzureRmLogProfile -Name default -ServiceBusRuleId $eventHubString -RetentionInDays 0 -Locations "Global","Central US","East US","East US 2","West US","North Central US","South Central US","West Central US","West US 2"
+    Add-AzureRmLogProfile -Name default -ServiceBusRuleId $eventHubString -RetentionInDays 0 -Location "Global","Central US","East US","East US 2","West US","North Central US","South Central US","West Central US","West US 2"
 }
