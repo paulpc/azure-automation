@@ -6,7 +6,7 @@ $tags["Build Date"]=get-date -UFormat "%m/%d/%Y"
 # Iterating through things
 foreach ($subby in Get-AzureRmSubscription ) {
     Write-Host "processing: " $subby.id $subby.Name
-    Select-AzureRmSubscription -Subscription $subby
+    Select-AzureRmSubscription $subby
     foreach ($nsg in Get-AzureRmNetworkSecurityGroup) {
         # creating the blobs where not already there
         $found=$false
