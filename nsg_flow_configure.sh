@@ -9,7 +9,7 @@ for subscription in `az account list --query [*].id --output tsv`; do
         echo $nsg
         location=`az network nsg show --ids $nsg | grep location | cut -d '"' -f 4`
         blobname=`echo $subscription | cut -d "-" -f 1`"$location"
-        az network watcher flow-log configure --nsg $nsg --enabled true --storage-account $blobname -g NetworkWatcherRG
+        az network watcher flow-log configure --nsg $nsg --enabled true --storage-account $blobname -g NetworkWatcherRG --retention 365
         #az network watcher flow-log show --nsg $nsg
       #fi
   done
